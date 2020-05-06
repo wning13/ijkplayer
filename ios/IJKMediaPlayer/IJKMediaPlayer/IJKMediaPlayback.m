@@ -37,6 +37,9 @@ NSString *const IJKMPMovieNaturalSizeAvailableNotification = @"IJKMPMovieNatural
 
 NSString *const IJKMPMoviePlayerVideoDecoderOpenNotification = @"IJKMPMoviePlayerVideoDecoderOpenNotification";
 
+NSString *const IJKMPMovieRotateAvailableNotification = @"IJKMPMovieRotateAvailableNotification";
+NSString *const IJKMPMovieRotateAvailableNotificationDegreesUserInfoKey = @"IJKMPMovieRotateAvailableNotificationDegreesUserInfoKey";
+
 NSString *const IJKMPMoviePlayerFirstVideoFrameRenderedNotification = @"IJKMPMoviePlayerFirstVideoFrameRenderedNotification";
 NSString *const IJKMPMoviePlayerFirstAudioFrameRenderedNotification = @"IJKMPMoviePlayerFirstAudioFrameRenderedNotification";
 NSString *const IJKMPMoviePlayerFirstAudioFrameDecodedNotification  = @"IJKMPMoviePlayerFirstAudioFrameDecodedNotification";

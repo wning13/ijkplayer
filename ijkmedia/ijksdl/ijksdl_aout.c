@@ -30,6 +30,8 @@ int SDL_AoutOpenAudio(SDL_Aout *aout, const SDL_AudioSpec *desired, SDL_AudioSpe
 {
     if (aout && desired && aout->open_audio)
         return aout->open_audio(aout, desired, obtained);
+    
+    SDLTRACE("open audio fail\n");
 
     return -1;
 }
