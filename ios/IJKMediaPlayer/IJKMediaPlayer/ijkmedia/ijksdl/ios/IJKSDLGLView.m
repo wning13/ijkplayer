@@ -27,6 +27,7 @@
 #include "ijksdl/ijksdl_timer.h"
 #include "ijksdl/ios/ijksdl_ios.h"
 #include "ijksdl/ijksdl_gles2.h"
+#import "FFCAEAGLLayer.h"
 
 typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
     IJKSDLGLViewApplicationUnknownState = 0,
@@ -36,7 +37,7 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
     IJKSDLGLViewApplicationInactiveState = 4,
 };
 
-@interface IJKSDLGLView()
+@interface IJKSDLGLView()<FFCAEAGLLayerDelegate>
 @property(atomic,strong) NSRecursiveLock *glActiveLock;
 @property(atomic) BOOL glActivePaused;
 @property(nonatomic, weak) CALayer *weakLayer;
@@ -74,7 +75,7 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
 
 + (Class) layerClass
 {
-	return [CAEAGLLayer class];
+	return [FFCAEAGLLayer class];
 }
 
 - (id) initWithFrame:(CGRect)frame
@@ -85,7 +86,9 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
         _shouldLockWhileBeingMovedToWindow = YES;
         self.glActiveLock = [[NSRecursiveLock alloc] init];
         _registeredNotifications = [[NSMutableArray alloc] init];
+        
         self.weakLayer = self.layer;
+        ((FFCAEAGLLayer *)self.layer).renderDelegate = self;
         UIApplicationState appState = [UIApplication sharedApplication].applicationState;
         switch (appState) {
             case UIApplicationStateActive:
@@ -648,4 +651,60 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
 {
     _shouldLockWhileBeingMovedToWindow = shouldLockWhileBeingMovedToWindow;
 }
+
+- (void)renderInContext:(CGContextRef)context
+{
+    [self lockGLActive];
+    EAGLContext *prevContext = [EAGLContext currentContext];
+    [EAGLContext setCurrentContext:_context];
+
+    GLint backingWidth, backingHeight;
+
+    // Bind the color renderbuffer used to render the OpenGL ES view
+    // If your application only creates a single color renderbuffer which is already bound at this point,
+    // this call is redundant, but it is needed if you're dealing with multiple renderbuffers.
+    // Note, replace "viewRenderbuffer" with the actual name of the renderbuffer object defined in your class.
+    glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
+
+    // Get the size of the backing CAEAGLLayer
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight);
+
+    NSInteger x = 0, y = 0, width = backingWidth, height = backingHeight;
+    NSInteger dataLength = width * height * 4;
+    GLubyte *data = (GLubyte*)malloc(dataLength * sizeof(GLubyte));
+
+    // Read pixel data from the framebuffer
+    glPixelStorei(GL_PACK_ALIGNMENT, 4);
+    glReadPixels((int)x, (int)y, (int)width, (int)height, GL_RGBA, GL_UNSIGNED_BYTE, data);
+
+    // Create a CGImage with the pixel data
+    // If your OpenGL ES content is opaque, use kCGImageAlphaNoneSkipLast to ignore the alpha channel
+    // otherwise, use kCGImageAlphaPremultipliedLast
+    CGDataProviderRef ref = CGDataProviderCreateWithData(NULL, data, dataLength, NULL);
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    CGImageRef iref = CGImageCreate(width, height, 8, 32, width * 4, colorspace, kCGBitmapByteOrder32Big | kCGImageAlphaPremultipliedLast,
+                                    ref, NULL, true, kCGRenderingIntentDefault);
+
+    [EAGLContext setCurrentContext:prevContext];
+   
+    CGFloat scale = self.contentScaleFactor;
+    NSInteger widthInPoints, heightInPoints;
+    widthInPoints = width / scale;
+    heightInPoints = height / scale;
+
+    // UIKit coordinate system is upside down to GL/Quartz coordinate system
+    // Flip the CGImage by rendering it to the flipped bitmap context
+    // The size of the destination area is measured in POINTS
+    CGContextSetBlendMode(context, kCGBlendModeCopy);
+    CGContextDrawImage(context, CGRectMake(0.0, 0.0, widthInPoints, heightInPoints), iref);
+
+    // Clean up
+    free(data);
+    CFRelease(ref);
+    CFRelease(colorspace);
+    CGImageRelease(iref);
+    [self unlockGLActive];
+}
+
 @end
