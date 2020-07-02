@@ -678,6 +678,9 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
     glPixelStorei(GL_PACK_ALIGNMENT, 4);
     glReadPixels((int)x, (int)y, (int)width, (int)height, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
+    [EAGLContext setCurrentContext:prevContext];
+    [self unlockGLActive];
+    
     // Create a CGImage with the pixel data
     // If your OpenGL ES content is opaque, use kCGImageAlphaNoneSkipLast to ignore the alpha channel
     // otherwise, use kCGImageAlphaPremultipliedLast
@@ -685,8 +688,6 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
     CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
     CGImageRef iref = CGImageCreate(width, height, 8, 32, width * 4, colorspace, kCGBitmapByteOrder32Big | kCGImageAlphaPremultipliedLast,
                                     ref, NULL, true, kCGRenderingIntentDefault);
-
-    [EAGLContext setCurrentContext:prevContext];
    
     CGFloat scale = self.contentScaleFactor;
     NSInteger widthInPoints, heightInPoints;
@@ -704,7 +705,7 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
     CFRelease(ref);
     CFRelease(colorspace);
     CGImageRelease(iref);
-    [self unlockGLActive];
+    
 }
 
 @end

@@ -1794,7 +1794,7 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
                     break;
             }
             [self pause];
-            [[IJKAudioKit sharedInstance] setActive:NO];
+            [[IJKAudioKit sharedInstance]  setActive:NO];
             break;
         }
         case AVAudioSessionInterruptionTypeEnded: {
