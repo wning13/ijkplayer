@@ -82,6 +82,10 @@ typedef NS_ENUM(NSInteger, IJKMPMovieTimeOption) {
 - (void)shutdown;
 - (void)setPauseInBackground:(BOOL)pause;
 
+- (CVPixelBufferRef)framePixelBuffer;
+- (void)lockFramePixelBuffer;
+- (void)unlockFramePixelBuffer;
+
 @property(nonatomic, readonly)  UIView *view;
 @property(nonatomic)            NSTimeInterval currentPlaybackTime;
 @property(nonatomic, readonly)  NSTimeInterval duration;

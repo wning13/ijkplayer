@@ -36,6 +36,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "libyuv.h"
 
 #include "libavutil/avstring.h"
 #include "libavutil/eval.h"
@@ -48,6 +49,7 @@
 #include "libavutil/avassert.h"
 #include "libavutil/time.h"
 #include "libavformat/avformat.h"
+#include "ijksdl_vout_overlay_videotoolbox.h"
 #if CONFIG_AVDEVICE
 #include "libavdevice/avdevice.h"
 #endif
@@ -563,6 +565,116 @@ fail0:
     return ret;
 }
 
+static int copyAVFrameToPixelBuffer(FFPlayer *ffp, AVCodecContext* avctx, const AVFrame* frame, CVPixelBufferRef cv_img, const size_t* plane_strides, const size_t* plane_rows)
+{
+    int i, j;
+    size_t plane_count;
+    int status;
+    size_t rows;
+    unsigned long src_stride;
+    unsigned long dst_stride;
+    uint8_t *src_addr;
+    uint8_t *dst_addr;
+    size_t copy_bytes;
+    
+    status = CVPixelBufferLockBaseAddress(cv_img, 0);
+    if (status) {
+        av_log(
+               avctx,
+               AV_LOG_ERROR,
+               "Error: Could not lock base address of CVPixelBuffer: %d.\n",
+               status
+               );
+    }
+    
+    
+    uint8* src_y = frame->data[0];
+    uint8* src_u = frame->data[1];
+    uint8* src_v = frame->data[2];
+    void* addr = CVPixelBufferGetBaseAddress(cv_img);
+    
+    int src_stride_y = frame->linesize[0];
+    int src_stride_u = frame->linesize[1];
+    int src_stride_v = frame->linesize[2];
+    size_t dst_width = CVPixelBufferGetBytesPerRow(cv_img);
+    
+    int src_width = frame->width;
+    int src_height = frame->height;
+    
+    I420ToARGB(src_y, src_stride_y,
+               src_u, src_stride_u,
+               src_v, src_stride_v,
+               addr, dst_width,
+               src_width, src_height);
+    
+    status = CVPixelBufferUnlockBaseAddress(cv_img, 0);
+    if (status) {
+        av_log(avctx, AV_LOG_ERROR, "Error: Could not unlock CVPixelBuffer base address: %d.\n", status);
+        return AVERROR_EXTERNAL;
+    }
+    
+    return 0;
+}
+
+int createCVPixelBuffer(FFPlayer *ffp, AVCodecContext* avctx, AVFrame* frame, CVPixelBufferRef* cvImage)
+{
+    size_t widths [AV_NUM_DATA_POINTERS];
+    size_t heights[AV_NUM_DATA_POINTERS];
+    size_t strides[AV_NUM_DATA_POINTERS];
+    int status;
+    
+    memset(widths,  0, sizeof(widths));
+    memset(heights, 0, sizeof(heights));
+    memset(strides, 0, sizeof(strides));
+    
+    widths[0] = avctx->width;
+    heights[0] = avctx->height;
+    strides[0] = frame ? frame->linesize[0] : avctx->width;
+    
+    widths[1] = (avctx->width + 1)/2;
+    heights[1] = (avctx->height + 1)/2;
+    strides[1] = frame? frame->linesize[1] : (avctx ->width + 1)/2;
+    
+    widths[2] = (avctx->width + 1)/2;
+    heights[2] = (avctx->height + 1)/2;
+    strides[2] = frame? frame->linesize[2] : (avctx ->width + 1)/2;
+    
+    if (!ffp->szt_pixelbuffer)
+    {
+        const void *keys[] = {
+            kCVPixelBufferMetalCompatibilityKey
+        };
+        const void *values[] = {
+            kCFBooleanTrue
+        };
+        CFDictionaryRef optionsDictionary = CFDictionaryCreate(NULL, keys, values, 1, NULL, NULL);
+        status = CVPixelBufferCreate(
+                                     kCFAllocatorDefault,
+                                     frame->width,
+                                     frame->height,
+                                     kCVPixelFormatType_32BGRA,
+                                     optionsDictionary,
+                                     cvImage
+                                     );
+        if (status)
+        {
+            return AVERROR_EXTERNAL;
+        }
+    }
+    
+    
+    status = copyAVFrameToPixelBuffer(ffp, avctx, frame, *cvImage, strides, heights);
+    if (status)
+    {
+        CFRelease(*cvImage);
+        *cvImage = NULL;
+        return status;
+    }
+    
+    return 0;
+}
+
+
 static int decoder_decode_frame(FFPlayer *ffp, Decoder *d, AVFrame *frame, AVSubtitle *sub) {
     int ret = AVERROR(EAGAIN);
 
@@ -584,6 +696,19 @@ static int decoder_decode_frame(FFPlayer *ffp, Decoder *d, AVFrame *frame, AVSub
                             } else if (!ffp->decoder_reorder_pts) {
                                 frame->pts = frame->pkt_dts;
                             }
+                            ffp_pixelbuffer_lock(ffp);
+                            CVPixelBufferRef cvImage = NULL;
+                            if (ffp->szt_pixelbuffer)
+                            {
+                                cvImage = ffp->szt_pixelbuffer;
+                            }
+                            int ret = createCVPixelBuffer(ffp, ffp->is->video_st->codec, frame, &cvImage);
+                                                
+                             if (!ret)
+                            {
+                                  ffp->szt_pixelbuffer = cvImage;
+                            }
+                            ffp_pixelbuffer_unlock(ffp);
                         }
                         break;
                     case AVMEDIA_TYPE_AUDIO:
@@ -1660,6 +1785,17 @@ static int queue_picture(FFPlayer *ffp, AVFrame *src_frame, double pts, double d
             av_log(NULL, AV_LOG_FATAL, "Cannot initialize the conversion context\n");
             exit(1);
         }
+        
+        if (ffp -> videotoolbox) {
+            ffp_pixelbuffer_lock(ffp);
+            ffp->szt_pixelbuffer = SDL_VoutOverlayVideoToolBox_GetCVPixelBufferRef(vp->bmp);  // picture->opaque;
+            ffp_pixelbuffer_unlock(ffp);
+            
+            if (!ffp->szt_pixelbuffer) {
+                ALOGE("nil pixelBuffer in overlay\n");
+            }
+        }
+        
         /* update the bitmap content */
         SDL_VoutUnlockYUVOverlay(vp->bmp);
 
@@ -3326,6 +3462,17 @@ static int read_thread(void *arg)
         AVCodecParameters *codecpar = is->video_st->codecpar;
         ffp_notify_msg3(ffp, FFP_MSG_VIDEO_SIZE_CHANGED, codecpar->width, codecpar->height);
         ffp_notify_msg3(ffp, FFP_MSG_SAR_CHANGED, codecpar->sample_aspect_ratio.num, codecpar->sample_aspect_ratio.den);
+        
+        
+        int sar_num = is->video_st->sample_aspect_ratio.num;
+        int sar_den = is->video_st->sample_aspect_ratio.den;
+        int width = codecpar->width;
+        int height = codecpar->height;
+        int dar_num;
+        int dar_den;
+        av_reduce(&dar_num, &dar_den, width * (int64_t)sar_num, height * (int64_t)sar_den, 1024 * 1024);
+        av_log(NULL, AV_LOG_INFO, "dar_num=%d, dar_den=%d", dar_num, dar_den);
+        ffp_notify_msg3(ffp, FFP_MSG_DAR_CHANGED, dar_num, dar_den);
     }
     ffp->prepared = true;
     ffp_notify_msg1(ffp, FFP_MSG_PREPARED);
@@ -5036,4 +5183,23 @@ IjkMediaMeta *ffp_get_meta_l(FFPlayer *ffp)
         return NULL;
 
     return ffp->meta;
+}
+
+
+int ffp_pixelbuffer_mutex_init(FFPlayer *ffp)
+{
+    int ret = pthread_mutex_init(&ffp->szt_pixelbuffer_mutex, NULL);
+    return ret;
+}
+            
+int ffp_pixelbuffer_lock(FFPlayer *ffp)
+{
+    int ret = pthread_mutex_lock(&ffp->szt_pixelbuffer_mutex);
+    return ret;
+}
+            
+int ffp_pixelbuffer_unlock(FFPlayer *ffp)
+{
+    int ret = pthread_mutex_unlock(&ffp->szt_pixelbuffer_mutex);
+    return ret;
 }

@@ -796,3 +796,27 @@ int ijkmp_get_msg(IjkMediaPlayer *mp, AVMessage *msg, int block)
 
     return -1;
 }
+
+
+CVPixelBufferRef ijkmp_get_pixelbuffer(IjkMediaPlayer *mp)
+{
+    return mp->ffplayer->szt_pixelbuffer;
+}
+
+int ijkmp_pixelbuffer_mutex_init(IjkMediaPlayer *mp)
+{
+    int ret = ffp_pixelbuffer_mutex_init(mp->ffplayer);
+    return ret;
+}
+
+int ijkmp_pixelbuffer_mutex_lock(IjkMediaPlayer *mp)
+{
+    int ret = ffp_pixelbuffer_lock(mp->ffplayer);
+    return ret;
+}
+
+int ijkmp_pixelbuffer_mutex_unlock(IjkMediaPlayer *mp)
+{
+    int ret = ffp_pixelbuffer_unlock(mp->ffplayer);
+    return ret;
+}

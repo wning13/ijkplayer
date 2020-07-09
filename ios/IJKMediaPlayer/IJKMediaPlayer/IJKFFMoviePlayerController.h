@@ -25,6 +25,7 @@
 #import "IJKFFMonitor.h"
 #import "IJKFFOptions.h"
 #import "IJKSDLGLViewProtocol.h"
+#import <AVFoundation/AVFoundation.h>
 
 // media meta
 #define k_IJKM_KEY_FORMAT         @"format"
@@ -75,8 +76,16 @@ typedef enum IJKLogLevel {
 - (id)initWithContentURL:(NSURL *)aUrl
              withOptions:(IJKFFOptions *)options;
 
+- (id)initWithContentURL:(NSURL *)aUrl
+             withOptions:(IJKFFOptions *)options
+    audioSessionCategory:(AVAudioSessionCategory)audioSessionCategory;
+
 - (id)initWithContentURLString:(NSString *)aUrlString
                    withOptions:(IJKFFOptions *)options;
+
+- (id)initWithContentURLString:(NSString *)aUrlString
+                   withOptions:(IJKFFOptions *)options
+          audioSessionCategory:(AVAudioSessionCategory)audioSessionCategory;
 
 - (id)initWithMoreContent:(NSURL *)aUrl
              withOptions:(IJKFFOptions *)options
@@ -140,6 +149,11 @@ typedef enum IJKLogLevel {
 
 #pragma mark KVO properties
 @property (nonatomic, readonly) IJKFFMonitor *monitor;
+
+- (CVPixelBufferRef)framePixelBuffer;
+- (void)lockFramePixelBuffer;
+- (void)unlockFramePixelBuffer;
+- (CGFloat)displayAspectRatio;
 
 @end
 

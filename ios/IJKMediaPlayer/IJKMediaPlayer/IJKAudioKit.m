@@ -48,14 +48,30 @@
                                                    object: [AVAudioSession sharedInstance]];
         _audioSessionInitialized = YES;
     }
+    
+    if (!_audioSessionCategory) {
+        _audioSessionCategory = AVAudioSessionCategoryPlayback;
+    }
 
     /* Set audio session to mediaplayback */
     NSError *error = nil;
-    if (NO == [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error]) {
-        NSLog(@"IJKAudioKit: AVAudioSession.setCategory() failed: %@\n", error ? [error localizedDescription] : @"nil");
-        return;
+    
+    if ([_audioSessionCategory isEqualToString: AVAudioSessionCategoryPlayAndRecord]) {
+        if (![[AVAudioSession sharedInstance].category isEqualToString:_audioSessionCategory]) {
+            if (NO == [[AVAudioSession sharedInstance] setCategory:self.audioSessionCategory withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error]) {
+                NSLog(@"IJKAudioKit: AVAudioSession.setCategory() failed: %@\n", error ? [error localizedDescription] : @"nil");
+                return;
+            }
+        }
+        error = nil;
+    } else {
+        if (NO == [[AVAudioSession sharedInstance] setCategory:self.audioSessionCategory error:&error]) {
+            NSLog(@"IJKAudioKit: AVAudioSession.setCategory() failed: %@\n", error ? [error localizedDescription] : @"nil");
+            return;
+        }
+        error = nil;
     }
-
+    
     error = nil;
     if (NO == [[AVAudioSession sharedInstance] setActive:YES error:&error]) {
         NSLog(@"IJKAudioKit: AVAudioSession.setActive(YES) failed: %@\n", error ? [error localizedDescription] : @"nil");

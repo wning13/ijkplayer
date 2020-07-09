@@ -28,6 +28,7 @@
 #include "ff_ffmsg_queue.h"
 
 #include "ijkmeta.h"
+#include <CoreVideo/CoreVideo.h>
 
 #ifndef MPTRACE
 #define MPTRACE ALOGD
@@ -217,5 +218,11 @@ void           *ijkmp_set_weak_thiz(IjkMediaPlayer *mp, void *weak_thiz);
 /* need to call msg_free_res for freeing the resouce obtained in msg */
 int             ijkmp_get_msg(IjkMediaPlayer *mp, AVMessage *msg, int block);
 void            ijkmp_set_frame_at_time(IjkMediaPlayer *mp, const char *path, int64_t start_time, int64_t end_time, int num, int definition);
+
+
+CVPixelBufferRef ijkmp_get_pixelbuffer(IjkMediaPlayer *mp);
+int ijkmp_pixelbuffer_mutex_init(IjkMediaPlayer *mp);
+int ijkmp_pixelbuffer_mutex_lock(IjkMediaPlayer *mp);
+int ijkmp_pixelbuffer_mutex_unlock(IjkMediaPlayer *mp);
 
 #endif

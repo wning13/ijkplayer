@@ -29,6 +29,8 @@
 @interface IJKAudioKit : NSObject
 
 + (IJKAudioKit *)sharedInstance;
+
+@property (nonatomic) AVAudioSessionCategory audioSessionCategory;
 - (void)setupAudioSession;
 - (BOOL)setActive:(BOOL)active;
 

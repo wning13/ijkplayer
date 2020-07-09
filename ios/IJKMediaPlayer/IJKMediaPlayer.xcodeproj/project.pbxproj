@@ -177,6 +177,63 @@
 		926067DF245A748200F4FB4A /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 920E1DAC21C0DF6200B3F7BF /* libssl.a */; };
 		926067E0245A748200F4FB4A /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E653C6F31BCE5A750016835A /* libswresample.a */; };
 		926067E1245A748200F4FB4A /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E653C6F41BCE5A750016835A /* libswscale.a */; };
+		9266D43A24ADB26500879906 /* scale_row.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D42824ADB26500879906 /* scale_row.h */; };
+		9266D43B24ADB26500879906 /* scale.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D42924ADB26500879906 /* scale.h */; };
+		9266D43C24ADB26500879906 /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D42A24ADB26500879906 /* version.h */; };
+		9266D43D24ADB26500879906 /* cpu_id.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D42B24ADB26500879906 /* cpu_id.h */; };
+		9266D43E24ADB26500879906 /* video_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D42C24ADB26500879906 /* video_common.h */; };
+		9266D43F24ADB26500879906 /* mjpeg_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D42D24ADB26500879906 /* mjpeg_decoder.h */; };
+		9266D44024ADB26500879906 /* planar_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D42E24ADB26500879906 /* planar_functions.h */; };
+		9266D44124ADB26500879906 /* scale_argb.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D42F24ADB26500879906 /* scale_argb.h */; };
+		9266D44224ADB26500879906 /* compare.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D43024ADB26500879906 /* compare.h */; };
+		9266D44324ADB26500879906 /* convert_argb.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D43124ADB26500879906 /* convert_argb.h */; };
+		9266D44424ADB26500879906 /* rotate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D43224ADB26500879906 /* rotate.h */; };
+		9266D44524ADB26500879906 /* convert_from_argb.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D43324ADB26500879906 /* convert_from_argb.h */; };
+		9266D44624ADB26500879906 /* basic_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D43424ADB26500879906 /* basic_types.h */; };
+		9266D44724ADB26500879906 /* convert_from.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D43524ADB26500879906 /* convert_from.h */; };
+		9266D44824ADB26500879906 /* convert.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D43624ADB26500879906 /* convert.h */; };
+		9266D44924ADB26500879906 /* rotate_argb.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D43724ADB26500879906 /* rotate_argb.h */; };
+		9266D44A24ADB26500879906 /* row.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D43824ADB26500879906 /* row.h */; };
+		9266D44B24ADB26500879906 /* libyuv.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266D43924ADB26500879906 /* libyuv.h */; };
+		9266D47824ADB6E800879906 /* rotate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45124ADB6E800879906 /* rotate.cc */; };
+		9266D47924ADB6E800879906 /* scale_gcc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45224ADB6E800879906 /* scale_gcc.cc */; };
+		9266D47A24ADB6E800879906 /* convert_jpeg.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45324ADB6E800879906 /* convert_jpeg.cc */; };
+		9266D47B24ADB6E800879906 /* compare_win.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45424ADB6E800879906 /* compare_win.cc */; };
+		9266D47C24ADB6E800879906 /* cpu_id.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45524ADB6E800879906 /* cpu_id.cc */; };
+		9266D47D24ADB6E800879906 /* row_win.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45624ADB6E800879906 /* row_win.cc */; };
+		9266D47E24ADB6E800879906 /* mjpeg_decoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45724ADB6E800879906 /* mjpeg_decoder.cc */; };
+		9266D47F24ADB6E800879906 /* row_neon.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45824ADB6E800879906 /* row_neon.cc */; };
+		9266D48024ADB6E800879906 /* rotate_neon64.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45924ADB6E800879906 /* rotate_neon64.cc */; };
+		9266D48124ADB6E800879906 /* scale.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45A24ADB6E800879906 /* scale.cc */; };
+		9266D48224ADB6E800879906 /* compare.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45B24ADB6E800879906 /* compare.cc */; };
+		9266D48324ADB6E800879906 /* row_neon64.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45C24ADB6E800879906 /* row_neon64.cc */; };
+		9266D48424ADB6E800879906 /* convert_from_argb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45D24ADB6E800879906 /* convert_from_argb.cc */; };
+		9266D48524ADB6E800879906 /* planar_functions.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45E24ADB6E800879906 /* planar_functions.cc */; };
+		9266D48624ADB6E800879906 /* convert_argb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D45F24ADB6E800879906 /* convert_argb.cc */; };
+		9266D48724ADB6E800879906 /* rotate_mips.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46024ADB6E800879906 /* rotate_mips.cc */; };
+		9266D48824ADB6E800879906 /* scale_mips.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46124ADB6E800879906 /* scale_mips.cc */; };
+		9266D48924ADB6E800879906 /* row_common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46224ADB6E800879906 /* row_common.cc */; };
+		9266D48A24ADB6E800879906 /* scale_any.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46324ADB6E800879906 /* scale_any.cc */; };
+		9266D48B24ADB6E800879906 /* convert.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46424ADB6E800879906 /* convert.cc */; };
+		9266D48C24ADB6E800879906 /* convert_from.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46524ADB6E800879906 /* convert_from.cc */; };
+		9266D48D24ADB6E800879906 /* scale_common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46624ADB6E800879906 /* scale_common.cc */; };
+		9266D48E24ADB6E800879906 /* row_mips.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46724ADB6E800879906 /* row_mips.cc */; };
+		9266D48F24ADB6E800879906 /* row_any.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46824ADB6E800879906 /* row_any.cc */; };
+		9266D49024ADB6E800879906 /* convert_to_argb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46924ADB6E800879906 /* convert_to_argb.cc */; };
+		9266D49124ADB6E800879906 /* compare_neon.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46A24ADB6E800879906 /* compare_neon.cc */; };
+		9266D49224ADB6E800879906 /* scale_neon64.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46B24ADB6E800879906 /* scale_neon64.cc */; };
+		9266D49324ADB6E800879906 /* mjpeg_validate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46C24ADB6E800879906 /* mjpeg_validate.cc */; };
+		9266D49424ADB6E800879906 /* scale_win.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46D24ADB6E800879906 /* scale_win.cc */; };
+		9266D49524ADB6E800879906 /* compare_common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46E24ADB6E800879906 /* compare_common.cc */; };
+		9266D49624ADB6E800879906 /* scale_neon.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D46F24ADB6E800879906 /* scale_neon.cc */; };
+		9266D49724ADB6E800879906 /* rotate_neon.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D47024ADB6E800879906 /* rotate_neon.cc */; };
+		9266D49824ADB6E800879906 /* video_common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D47124ADB6E800879906 /* video_common.cc */; };
+		9266D49924ADB6E800879906 /* convert_to_i420.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D47224ADB6E800879906 /* convert_to_i420.cc */; };
+		9266D49A24ADB6E800879906 /* row_gcc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D47324ADB6E800879906 /* row_gcc.cc */; };
+		9266D49B24ADB6E800879906 /* rotate_argb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D47424ADB6E800879906 /* rotate_argb.cc */; };
+		9266D49C24ADB6E800879906 /* compare_gcc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D47524ADB6E800879906 /* compare_gcc.cc */; };
+		9266D49D24ADB6E800879906 /* compare_neon64.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D47624ADB6E800879906 /* compare_neon64.cc */; };
+		9266D49E24ADB6E800879906 /* scale_argb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9266D47724ADB6E800879906 /* scale_argb.cc */; };
 		E607FFE11B7B62E3005F11A6 /* IJKDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E607FFDF1B7B60F9005F11A6 /* IJKDeviceModel.m */; };
 		E654EA8F1B6B27E600B0F2D0 /* IJKMediaFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = E654EA8E1B6B27E600B0F2D0 /* IJKMediaFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E654EA951B6B27E600B0F2D0 /* IJKMediaFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E654EA8A1B6B27E600B0F2D0 /* IJKMediaFramework.framework */; };
@@ -327,6 +384,63 @@
 		920E1DAD21C0DF6200B3F7BF /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../build/universal/lib/libcrypto.a; sourceTree = "<group>"; };
 		9227447A24693E3900D3F06B /* FFCAEAGLLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFCAEAGLLayer.h; sourceTree = "<group>"; };
 		9227447B24693E3900D3F06B /* FFCAEAGLLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFCAEAGLLayer.m; sourceTree = "<group>"; };
+		9266D42824ADB26500879906 /* scale_row.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scale_row.h; sourceTree = "<group>"; };
+		9266D42924ADB26500879906 /* scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scale.h; sourceTree = "<group>"; };
+		9266D42A24ADB26500879906 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
+		9266D42B24ADB26500879906 /* cpu_id.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_id.h; sourceTree = "<group>"; };
+		9266D42C24ADB26500879906 /* video_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_common.h; sourceTree = "<group>"; };
+		9266D42D24ADB26500879906 /* mjpeg_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mjpeg_decoder.h; sourceTree = "<group>"; };
+		9266D42E24ADB26500879906 /* planar_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = planar_functions.h; sourceTree = "<group>"; };
+		9266D42F24ADB26500879906 /* scale_argb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scale_argb.h; sourceTree = "<group>"; };
+		9266D43024ADB26500879906 /* compare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compare.h; sourceTree = "<group>"; };
+		9266D43124ADB26500879906 /* convert_argb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert_argb.h; sourceTree = "<group>"; };
+		9266D43224ADB26500879906 /* rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rotate.h; sourceTree = "<group>"; };
+		9266D43324ADB26500879906 /* convert_from_argb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert_from_argb.h; sourceTree = "<group>"; };
+		9266D43424ADB26500879906 /* basic_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basic_types.h; sourceTree = "<group>"; };
+		9266D43524ADB26500879906 /* convert_from.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert_from.h; sourceTree = "<group>"; };
+		9266D43624ADB26500879906 /* convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert.h; sourceTree = "<group>"; };
+		9266D43724ADB26500879906 /* rotate_argb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rotate_argb.h; sourceTree = "<group>"; };
+		9266D43824ADB26500879906 /* row.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = row.h; sourceTree = "<group>"; };
+		9266D43924ADB26500879906 /* libyuv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libyuv.h; sourceTree = "<group>"; };
+		9266D45124ADB6E800879906 /* rotate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rotate.cc; sourceTree = "<group>"; };
+		9266D45224ADB6E800879906 /* scale_gcc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scale_gcc.cc; sourceTree = "<group>"; };
+		9266D45324ADB6E800879906 /* convert_jpeg.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convert_jpeg.cc; sourceTree = "<group>"; };
+		9266D45424ADB6E800879906 /* compare_win.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compare_win.cc; sourceTree = "<group>"; };
+		9266D45524ADB6E800879906 /* cpu_id.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cpu_id.cc; sourceTree = "<group>"; };
+		9266D45624ADB6E800879906 /* row_win.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = row_win.cc; sourceTree = "<group>"; };
+		9266D45724ADB6E800879906 /* mjpeg_decoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mjpeg_decoder.cc; sourceTree = "<group>"; };
+		9266D45824ADB6E800879906 /* row_neon.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = row_neon.cc; sourceTree = "<group>"; };
+		9266D45924ADB6E800879906 /* rotate_neon64.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rotate_neon64.cc; sourceTree = "<group>"; };
+		9266D45A24ADB6E800879906 /* scale.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scale.cc; sourceTree = "<group>"; };
+		9266D45B24ADB6E800879906 /* compare.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compare.cc; sourceTree = "<group>"; };
+		9266D45C24ADB6E800879906 /* row_neon64.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = row_neon64.cc; sourceTree = "<group>"; };
+		9266D45D24ADB6E800879906 /* convert_from_argb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convert_from_argb.cc; sourceTree = "<group>"; };
+		9266D45E24ADB6E800879906 /* planar_functions.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = planar_functions.cc; sourceTree = "<group>"; };
+		9266D45F24ADB6E800879906 /* convert_argb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convert_argb.cc; sourceTree = "<group>"; };
+		9266D46024ADB6E800879906 /* rotate_mips.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rotate_mips.cc; sourceTree = "<group>"; };
+		9266D46124ADB6E800879906 /* scale_mips.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scale_mips.cc; sourceTree = "<group>"; };
+		9266D46224ADB6E800879906 /* row_common.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = row_common.cc; sourceTree = "<group>"; };
+		9266D46324ADB6E800879906 /* scale_any.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scale_any.cc; sourceTree = "<group>"; };
+		9266D46424ADB6E800879906 /* convert.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convert.cc; sourceTree = "<group>"; };
+		9266D46524ADB6E800879906 /* convert_from.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convert_from.cc; sourceTree = "<group>"; };
+		9266D46624ADB6E800879906 /* scale_common.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scale_common.cc; sourceTree = "<group>"; };
+		9266D46724ADB6E800879906 /* row_mips.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = row_mips.cc; sourceTree = "<group>"; };
+		9266D46824ADB6E800879906 /* row_any.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = row_any.cc; sourceTree = "<group>"; };
+		9266D46924ADB6E800879906 /* convert_to_argb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convert_to_argb.cc; sourceTree = "<group>"; };
+		9266D46A24ADB6E800879906 /* compare_neon.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compare_neon.cc; sourceTree = "<group>"; };
+		9266D46B24ADB6E800879906 /* scale_neon64.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scale_neon64.cc; sourceTree = "<group>"; };
+		9266D46C24ADB6E800879906 /* mjpeg_validate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mjpeg_validate.cc; sourceTree = "<group>"; };
+		9266D46D24ADB6E800879906 /* scale_win.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scale_win.cc; sourceTree = "<group>"; };
+		9266D46E24ADB6E800879906 /* compare_common.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compare_common.cc; sourceTree = "<group>"; };
+		9266D46F24ADB6E800879906 /* scale_neon.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scale_neon.cc; sourceTree = "<group>"; };
+		9266D47024ADB6E800879906 /* rotate_neon.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rotate_neon.cc; sourceTree = "<group>"; };
+		9266D47124ADB6E800879906 /* video_common.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_common.cc; sourceTree = "<group>"; };
+		9266D47224ADB6E800879906 /* convert_to_i420.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convert_to_i420.cc; sourceTree = "<group>"; };
+		9266D47324ADB6E800879906 /* row_gcc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = row_gcc.cc; sourceTree = "<group>"; };
+		9266D47424ADB6E800879906 /* rotate_argb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rotate_argb.cc; sourceTree = "<group>"; };
+		9266D47524ADB6E800879906 /* compare_gcc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compare_gcc.cc; sourceTree = "<group>"; };
+		9266D47624ADB6E800879906 /* compare_neon64.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compare_neon64.cc; sourceTree = "<group>"; };
+		9266D47724ADB6E800879906 /* scale_argb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scale_argb.cc; sourceTree = "<group>"; };
 		E607FFDE1B7B60F9005F11A6 /* IJKDeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IJKDeviceModel.h; path = IJKMediaPlayer/IJKDeviceModel.h; sourceTree = "<group>"; };
 		E607FFDF1B7B60F9005F11A6 /* IJKDeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IJKDeviceModel.m; path = IJKMediaPlayer/IJKDeviceModel.m; sourceTree = "<group>"; };
 		E62139BC180FA89A00553533 /* IJKFFOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJKFFOptions.h; sourceTree = "<group>"; };
@@ -545,6 +659,94 @@
 			path = IJKMediaFrameworkWithSSL;
 			sourceTree = "<group>";
 		};
+		9266D42624ADB25400879906 /* libyuv */ = {
+			isa = PBXGroup;
+			children = (
+				9266D49F24ADB6FE00879906 /* include */,
+				9266D45024ADB6E800879906 /* source */,
+			);
+			path = libyuv;
+			sourceTree = "<group>";
+		};
+		9266D42724ADB26500879906 /* libyuv */ = {
+			isa = PBXGroup;
+			children = (
+				9266D42824ADB26500879906 /* scale_row.h */,
+				9266D42924ADB26500879906 /* scale.h */,
+				9266D42A24ADB26500879906 /* version.h */,
+				9266D42B24ADB26500879906 /* cpu_id.h */,
+				9266D42C24ADB26500879906 /* video_common.h */,
+				9266D42D24ADB26500879906 /* mjpeg_decoder.h */,
+				9266D42E24ADB26500879906 /* planar_functions.h */,
+				9266D42F24ADB26500879906 /* scale_argb.h */,
+				9266D43024ADB26500879906 /* compare.h */,
+				9266D43124ADB26500879906 /* convert_argb.h */,
+				9266D43224ADB26500879906 /* rotate.h */,
+				9266D43324ADB26500879906 /* convert_from_argb.h */,
+				9266D43424ADB26500879906 /* basic_types.h */,
+				9266D43524ADB26500879906 /* convert_from.h */,
+				9266D43624ADB26500879906 /* convert.h */,
+				9266D43724ADB26500879906 /* rotate_argb.h */,
+				9266D43824ADB26500879906 /* row.h */,
+			);
+			path = libyuv;
+			sourceTree = "<group>";
+		};
+		9266D45024ADB6E800879906 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				9266D45124ADB6E800879906 /* rotate.cc */,
+				9266D45224ADB6E800879906 /* scale_gcc.cc */,
+				9266D45324ADB6E800879906 /* convert_jpeg.cc */,
+				9266D45424ADB6E800879906 /* compare_win.cc */,
+				9266D45524ADB6E800879906 /* cpu_id.cc */,
+				9266D45624ADB6E800879906 /* row_win.cc */,
+				9266D45724ADB6E800879906 /* mjpeg_decoder.cc */,
+				9266D45824ADB6E800879906 /* row_neon.cc */,
+				9266D45924ADB6E800879906 /* rotate_neon64.cc */,
+				9266D45A24ADB6E800879906 /* scale.cc */,
+				9266D45B24ADB6E800879906 /* compare.cc */,
+				9266D45C24ADB6E800879906 /* row_neon64.cc */,
+				9266D45D24ADB6E800879906 /* convert_from_argb.cc */,
+				9266D45E24ADB6E800879906 /* planar_functions.cc */,
+				9266D45F24ADB6E800879906 /* convert_argb.cc */,
+				9266D46024ADB6E800879906 /* rotate_mips.cc */,
+				9266D46124ADB6E800879906 /* scale_mips.cc */,
+				9266D46224ADB6E800879906 /* row_common.cc */,
+				9266D46324ADB6E800879906 /* scale_any.cc */,
+				9266D46424ADB6E800879906 /* convert.cc */,
+				9266D46524ADB6E800879906 /* convert_from.cc */,
+				9266D46624ADB6E800879906 /* scale_common.cc */,
+				9266D46724ADB6E800879906 /* row_mips.cc */,
+				9266D46824ADB6E800879906 /* row_any.cc */,
+				9266D46924ADB6E800879906 /* convert_to_argb.cc */,
+				9266D46A24ADB6E800879906 /* compare_neon.cc */,
+				9266D46B24ADB6E800879906 /* scale_neon64.cc */,
+				9266D46C24ADB6E800879906 /* mjpeg_validate.cc */,
+				9266D46D24ADB6E800879906 /* scale_win.cc */,
+				9266D46E24ADB6E800879906 /* compare_common.cc */,
+				9266D46F24ADB6E800879906 /* scale_neon.cc */,
+				9266D47024ADB6E800879906 /* rotate_neon.cc */,
+				9266D47124ADB6E800879906 /* video_common.cc */,
+				9266D47224ADB6E800879906 /* convert_to_i420.cc */,
+				9266D47324ADB6E800879906 /* row_gcc.cc */,
+				9266D47424ADB6E800879906 /* rotate_argb.cc */,
+				9266D47524ADB6E800879906 /* compare_gcc.cc */,
+				9266D47624ADB6E800879906 /* compare_neon64.cc */,
+				9266D47724ADB6E800879906 /* scale_argb.cc */,
+			);
+			path = source;
+			sourceTree = "<group>";
+		};
+		9266D49F24ADB6FE00879906 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				9266D42724ADB26500879906 /* libyuv */,
+				9266D43924ADB26500879906 /* libyuv.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
 		E63FC27217F013DE003551EB /* dummy */ = {
 			isa = PBXGroup;
 			children = (
@@ -679,6 +881,7 @@
 		E6903EBE17EAF6C500CFD954 /* IJKFFMoviePlayerController */ = {
 			isa = PBXGroup;
 			children = (
+				9266D42624ADB25400879906 /* libyuv */,
 				E6903F7617EAFC2C00CFD954 /* ffmpeg */,
 				E6DBD3871C8941EB0058E4FB /* IJKFFMonitor.h */,
 				E6DBD3881C8941EB0058E4FB /* IJKFFMonitor.m */,
@@ -1013,38 +1216,56 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9266D44824ADB26500879906 /* convert.h in Headers */,
+				9266D44624ADB26500879906 /* basic_types.h in Headers */,
 				E6DBD3891C8941EB0058E4FB /* IJKFFMonitor.h in Headers */,
 				54CF8A3C1E1526F800309DD5 /* ijkiourl.h in Headers */,
 				E654EAEA1B6B295200B0F2D0 /* IJKFFMoviePlayerController.h in Headers */,
 				E68B7AC51C1E7F20001DE241 /* IJKSDLHudViewController.h in Headers */,
 				E654EAEC1B6B295200B0F2D0 /* IJKFFOptions.h in Headers */,
+				9266D43E24ADB26500879906 /* video_common.h in Headers */,
 				54CF8A541E15287D00309DD5 /* ijkutils.h in Headers */,
+				9266D44224ADB26500879906 /* compare.h in Headers */,
 				54CF8A4A1E15287D00309DD5 /* ijkdict.h in Headers */,
 				E654EAE81B6B295200B0F2D0 /* IJKAVMoviePlayerController.h in Headers */,
 				E6C459841C7030AA004831EC /* ijksdl_gles2.h in Headers */,
+				9266D43C24ADB26500879906 /* version.h in Headers */,
 				E6C459BB1C706A13004831EC /* ijksdl_egl.h in Headers */,
 				E6C459BD1C7089AB004831EC /* ff_ffplay_options.h in Headers */,
+				9266D43F24ADB26500879906 /* mjpeg_decoder.h in Headers */,
 				E654EA8F1B6B27E600B0F2D0 /* IJKMediaFramework.h in Headers */,
+				9266D43A24ADB26500879906 /* scale_row.h in Headers */,
 				E6C2E7BE1C92BD3600E59229 /* IJKKVOController.h in Headers */,
+				9266D44124ADB26500879906 /* scale_argb.h in Headers */,
 				E69808A01C7EB2040048A46C /* IJKNotificationManager.h in Headers */,
+				9266D44324ADB26500879906 /* convert_argb.h in Headers */,
 				54CF8A501E15287D00309DD5 /* ijkthreadpool.h in Headers */,
 				54CF8A391E1526F800309DD5 /* ijkiomanager.h in Headers */,
 				54CF8A4E1E15287D00309DD5 /* ijkstl.h in Headers */,
+				9266D44524ADB26500879906 /* convert_from_argb.h in Headers */,
 				4D32BC811F906E3A00CE9F03 /* IJKSDLGLViewProtocol.h in Headers */,
 				E654EAE61B6B295200B0F2D0 /* IJKMediaModule.h in Headers */,
+				9266D44B24ADB26500879906 /* libyuv.h in Headers */,
 				54CF8A4C1E15287D00309DD5 /* ijkfifo.h in Headers */,
 				54CF8A521E15287D00309DD5 /* ijktree.h in Headers */,
 				9227447C24693E3900D3F06B /* FFCAEAGLLayer.h in Headers */,
 				E69BE5571B93FED300AFBA3F /* opt.h in Headers */,
+				9266D44924ADB26500879906 /* rotate_argb.h in Headers */,
+				9266D44024ADB26500879906 /* planar_functions.h in Headers */,
 				54CF8A351E1526F800309DD5 /* ijkioapplication.h in Headers */,
+				9266D44A24ADB26500879906 /* row.h in Headers */,
+				9266D43D24ADB26500879906 /* cpu_id.h in Headers */,
 				54CF8A3B1E1526F800309DD5 /* ijkioprotocol.h in Headers */,
 				E654EAE71B6B295200B0F2D0 /* IJKMediaPlayback.h in Headers */,
 				E654EAED1B6B29C100B0F2D0 /* IJKMediaPlayer.h in Headers */,
 				E6C459961C7030B6004831EC /* internal.h in Headers */,
 				5407EC2D1DF81D2600457BFE /* IJKVideoToolBoxSync.h in Headers */,
+				9266D44724ADB26500879906 /* convert_from.h in Headers */,
 				E654EAE91B6B295200B0F2D0 /* IJKMPMoviePlayerController.h in Headers */,
+				9266D44424ADB26500879906 /* rotate.h in Headers */,
 				54A029B71D4700E6001C61C1 /* ijkavformat.h in Headers */,
 				E68B7ACF1C1E97B0001DE241 /* IJKSDLHudViewCell.h in Headers */,
+				9266D43B24ADB26500879906 /* scale.h in Headers */,
 				5407EC291DF7F93B00457BFE /* IJKVideoToolBox.h in Headers */,
 				E698089B1C7EB13A0048A46C /* NSString+IJKMedia.h in Headers */,
 			);
@@ -1298,12 +1519,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9266D49024ADB6E800879906 /* convert_to_argb.cc in Sources */,
 				E654EAA71B6B283700B0F2D0 /* IJKKVOController.m in Sources */,
+				9266D47A24ADB6E800879906 /* convert_jpeg.cc in Sources */,
+				9266D49924ADB6E800879906 /* convert_to_i420.cc in Sources */,
 				E654EAC71B6B287E00B0F2D0 /* ijksdl_vout.c in Sources */,
 				E6C459951C7030B6004831EC /* yuv444p10le.fsh.c in Sources */,
 				E69BE5511B93FED300AFBA3F /* allformats.c in Sources */,
 				E654EABB1B6B286B00B0F2D0 /* ffpipenode_ffplay_vdec.c in Sources */,
+				9266D48124ADB6E800879906 /* scale.cc in Sources */,
 				E6C459981C7030B6004831EC /* renderer_yuv420p.c in Sources */,
+				9266D49A24ADB6E800879906 /* row_gcc.cc in Sources */,
 				54CF8A4F1E15287D00309DD5 /* ijkthreadpool.c in Sources */,
 				E654EAA91B6B283D00B0F2D0 /* IJKAVMoviePlayerController.m in Sources */,
 				E654EAAC1B6B284C00B0F2D0 /* IJKFFMoviePlayerDef.m in Sources */,
@@ -1313,60 +1539,89 @@
 				E654EABD1B6B287000B0F2D0 /* ijksdl_vout_dummy.c in Sources */,
 				E6C459CC1C70967F004831EC /* renderer_yuv420sp.c in Sources */,
 				E6C459941C7030B6004831EC /* yuv420p.fsh.c in Sources */,
+				9266D49824ADB6E800879906 /* video_common.cc in Sources */,
 				E654EAC21B6B287E00B0F2D0 /* ijksdl_error.c in Sources */,
 				E607FFE11B7B62E3005F11A6 /* IJKDeviceModel.m in Sources */,
 				54CF8A361E1526F800309DD5 /* ijkiocache.c in Sources */,
 				E6C459BA1C706A13004831EC /* ijksdl_egl.c in Sources */,
+				9266D49724ADB6E800879906 /* rotate_neon.cc in Sources */,
+				9266D48424ADB6E800879906 /* convert_from_argb.cc in Sources */,
 				54CF8A331E1526F800309DD5 /* ijkio.c in Sources */,
 				9227447D24693E3900D3F06B /* FFCAEAGLLayer.m in Sources */,
 				E654EAA31B6B283700B0F2D0 /* IJKAudioKit.m in Sources */,
 				E654EAAA1B6B284300B0F2D0 /* IJKMPMoviePlayerController.m in Sources */,
 				E68B7AD01C1E97B0001DE241 /* IJKSDLHudViewCell.m in Sources */,
+				9266D48C24ADB6E800879906 /* convert_from.cc in Sources */,
 				E654EACB1B6B288A00B0F2D0 /* ijksdl_vout_overlay_videotoolbox.m in Sources */,
 				E654EAB11B6B285900B0F2D0 /* ff_ffpipenode.c in Sources */,
 				E654EAC41B6B287E00B0F2D0 /* ijksdl_stdinc.c in Sources */,
+				9266D48024ADB6E800879906 /* rotate_neon64.cc in Sources */,
 				5407EC2A1DF7F93B00457BFE /* IJKVideoToolBox.m in Sources */,
 				54A029B91D4700E6001C61C1 /* ijksegment.c in Sources */,
 				E654EAA61B6B283700B0F2D0 /* IJKMediaUtils.m in Sources */,
+				9266D49224ADB6E800879906 /* scale_neon64.cc in Sources */,
 				E6C459931C7030B6004831EC /* common.c in Sources */,
 				E654EAC81B6B288A00B0F2D0 /* ijksdl_aout_ios_audiounit.m in Sources */,
 				E69BE5721B946FF600AFBA3F /* ijklivehook.c in Sources */,
+				9266D48F24ADB6E800879906 /* row_any.cc in Sources */,
 				54A029BA1D4700E6001C61C1 /* ijkurlhook.c in Sources */,
+				9266D48224ADB6E800879906 /* compare.cc in Sources */,
 				5407EC2E1DF81D2600457BFE /* IJKVideoToolBoxSync.m in Sources */,
 				E654EAA51B6B283700B0F2D0 /* IJKMediaPlayback.m in Sources */,
 				54CF8A491E15287D00309DD5 /* ijkdict.c in Sources */,
 				E654EAB01B6B285900B0F2D0 /* ff_ffpipeline.c in Sources */,
+				9266D49424ADB6E800879906 /* scale_win.cc in Sources */,
 				4DA7F6891F2B1E270032A499 /* ijkiourlhook.c in Sources */,
+				9266D47E24ADB6E800879906 /* mjpeg_decoder.cc in Sources */,
 				E654EACC1B6B288A00B0F2D0 /* IJKSDLAudioKit.m in Sources */,
+				9266D47B24ADB6E800879906 /* compare_win.cc in Sources */,
 				E6C4599B1C7030B6004831EC /* mvp.vsh.c in Sources */,
 				E698089C1C7EB13A0048A46C /* NSString+IJKMedia.m in Sources */,
+				9266D47F24ADB6E800879906 /* row_neon.cc in Sources */,
+				9266D49524ADB6E800879906 /* compare_common.cc in Sources */,
 				E654EABF1B6B287600B0F2D0 /* ijksdl_vout_overlay_ffmpeg.c in Sources */,
 				E654EAC31B6B287E00B0F2D0 /* ijksdl_mutex.c in Sources */,
 				54CF8A511E15287D00309DD5 /* ijktree.c in Sources */,
 				E654EACD1B6B288A00B0F2D0 /* IJKSDLAudioQueueController.m in Sources */,
+				9266D49E24ADB6E800879906 /* scale_argb.cc in Sources */,
 				E654EAC51B6B287E00B0F2D0 /* ijksdl_thread.c in Sources */,
 				E6C459C81C7095E5004831EC /* yuv420sp.fsh.c in Sources */,
 				E654EAB21B6B285900B0F2D0 /* ff_ffplay.c in Sources */,
+				9266D48524ADB6E800879906 /* planar_functions.cc in Sources */,
 				E654EAC01B6B287E00B0F2D0 /* ijksdl_aout.c in Sources */,
+				9266D48B24ADB6E800879906 /* convert.cc in Sources */,
 				E6C459921C7030B6004831EC /* color.c in Sources */,
 				E654EAC11B6B287E00B0F2D0 /* ijksdl_audio.c in Sources */,
+				9266D48E24ADB6E800879906 /* row_mips.cc in Sources */,
 				E654EAC91B6B288A00B0F2D0 /* ijksdl_thread_ios.m in Sources */,
 				E654EAB31B6B285900B0F2D0 /* ijkmeta.c in Sources */,
+				9266D47824ADB6E800879906 /* rotate.cc in Sources */,
 				54A029B61D4700E6001C61C1 /* ijkasync.c in Sources */,
 				E6E1B9A81C741F72000C6C72 /* renderer_yuv420sp_vtb.m in Sources */,
 				54CF8A531E15287D00309DD5 /* ijkutils.c in Sources */,
+				9266D48324ADB6E800879906 /* row_neon64.cc in Sources */,
+				9266D49324ADB6E800879906 /* mjpeg_validate.cc in Sources */,
 				E654EAD31B6B288A00B0F2D0 /* IJKSDLGLView.m in Sources */,
 				E654EAC61B6B287E00B0F2D0 /* ijksdl_timer.c in Sources */,
+				9266D49C24ADB6E800879906 /* compare_gcc.cc in Sources */,
+				9266D47D24ADB6E800879906 /* row_win.cc in Sources */,
+				9266D49624ADB6E800879906 /* scale_neon.cc in Sources */,
 				54CF8A4B1E15287D00309DD5 /* ijkfifo.c in Sources */,
 				E6C4599A1C7030B6004831EC /* shader.c in Sources */,
 				54CF8A371E1526F800309DD5 /* ijkioffio.c in Sources */,
 				E6C459971C7030B6004831EC /* renderer.c in Sources */,
+				9266D48624ADB6E800879906 /* convert_argb.cc in Sources */,
 				54CF8A341E1526F800309DD5 /* ijkioapplication.c in Sources */,
+				9266D48D24ADB6E800879906 /* scale_common.cc in Sources */,
 				54CF8A381E1526F800309DD5 /* ijkiomanager.c in Sources */,
 				E654EAB41B6B285900B0F2D0 /* ijkplayer.c in Sources */,
 				E654EAAE1B6B284C00B0F2D0 /* IJKFFOptions.m in Sources */,
+				9266D49D24ADB6E800879906 /* compare_neon64.cc in Sources */,
 				E654EACE1B6B288A00B0F2D0 /* IJKSDLAudioUnitController.m in Sources */,
+				9266D48824ADB6E800879906 /* scale_mips.cc in Sources */,
 				E6DBD38A1C8941EB0058E4FB /* IJKFFMonitor.m in Sources */,
+				9266D48924ADB6E800879906 /* row_common.cc in Sources */,
+				9266D49124ADB6E800879906 /* compare_neon.cc in Sources */,
 				E654EAAB1B6B284C00B0F2D0 /* IJKFFMoviePlayerController.m in Sources */,
 				E69808A11C7EB2040048A46C /* IJKNotificationManager.m in Sources */,
 				E654EAA41B6B283700B0F2D0 /* IJKMediaModule.m in Sources */,
@@ -1374,13 +1629,18 @@
 				E654EAB81B6B286400B0F2D0 /* IJKVideoToolBoxAsync.m in Sources */,
 				E6C459991C7030B6004831EC /* renderer_yuv444p10le.c in Sources */,
 				54CF8A4D1E15287D00309DD5 /* ijkstl.cpp in Sources */,
+				9266D48724ADB6E800879906 /* rotate_mips.cc in Sources */,
 				E654EABE1B6B287400B0F2D0 /* image_convert.c in Sources */,
 				E6C459C41C708E60004831EC /* rgb.fsh.c in Sources */,
+				9266D47C24ADB6E800879906 /* cpu_id.cc in Sources */,
+				9266D48A24ADB6E800879906 /* scale_any.cc in Sources */,
 				E654EAB61B6B286400B0F2D0 /* ffpipenode_ios_videotoolbox_vdec.m in Sources */,
 				E654EAA81B6B283D00B0F2D0 /* IJKAVPlayerLayerView.m in Sources */,
 				E68B7AC61C1E7F20001DE241 /* IJKSDLHudViewController.m in Sources */,
+				9266D49B24ADB6E800879906 /* rotate_argb.cc in Sources */,
 				E654EACA1B6B288A00B0F2D0 /* ijksdl_vout_ios_gles2.m in Sources */,
 				54A029B81D4700E6001C61C1 /* ijklongurl.c in Sources */,
+				9266D47924ADB6E800879906 /* scale_gcc.cc in Sources */,
 				E6C459C01C708CAF004831EC /* renderer_rgb.c in Sources */,
 				E654EABA1B6B286B00B0F2D0 /* ffpipeline_ffplay.c in Sources */,
 			);
@@ -1543,6 +1803,7 @@
 					../build/universal/include,
 					IJKMediaPlayer/ijkmedia,
 					../../ijkmedia,
+					"\"$(SRCROOT)/IJKMediaPlayer/libyuv/include\"",
 				);
 				INFOPLIST_FILE = IJKMediaFramework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1591,6 +1852,7 @@
 					../build/universal/include,
 					IJKMediaPlayer/ijkmedia,
 					../../ijkmedia,
+					"\"$(SRCROOT)/IJKMediaPlayer/libyuv/include\"",
 				);
 				INFOPLIST_FILE = IJKMediaFramework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

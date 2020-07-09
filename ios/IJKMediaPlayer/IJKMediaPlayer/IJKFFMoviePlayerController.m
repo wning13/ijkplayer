@@ -70,6 +70,8 @@ static const char *kIJKFFRequiredFFmpegVersion = "ff3.4--ijk0.8.7--20180103--001
     BOOL _pauseInBackground;
     BOOL _isVideoToolboxOpen;
     BOOL _playingBeforeInterruption;
+    
+    float _dar;
 
     IJKNotificationManager *_notificationManager;
 
@@ -160,6 +162,15 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
 - (id)initWithContentURL:(NSURL *)aUrl
              withOptions:(IJKFFOptions *)options
 {
+    return [self initWithContentURL:aUrl
+                        withOptions:options
+               audioSessionCategory:AVAudioSessionCategoryPlayback];
+}
+
+
+- (id)initWithContentURL:(NSURL *)aUrl
+             withOptions:(IJKFFOptions *)options
+    audioSessionCategory:(AVAudioSessionCategory)audioSessionCategory {
     if (aUrl == nil)
         return nil;
 
@@ -167,7 +178,8 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
     NSString *aUrlString = [aUrl isFileURL] ? [aUrl path] : [aUrl absoluteString];
 
     return [self initWithContentURLString:aUrlString
-                              withOptions:options];
+                              withOptions:options
+                     audioSessionCategory:audioSessionCategory];
 }
 
 - (void)setScreenOn: (BOOL)on
@@ -177,91 +189,97 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
 }
 
 - (id)initWithContentURLString:(NSString *)aUrlString
+                   withOptions:(IJKFFOptions *)options {
+    return [self initWithContentURLString:aUrlString withOptions:options audioSessionCategory:AVAudioSessionCategoryPlayback];
+}
+
+- (id)initWithContentURLString:(NSString *)aUrlString
                    withOptions:(IJKFFOptions *)options
-{
+          audioSessionCategory:(AVAudioSessionCategory)audioSessionCategory {
     if (aUrlString == nil)
-        return nil;
+            return nil;
 
-    self = [super init];
-    if (self) {
-        ijkmp_global_init();
-        ijkmp_global_set_inject_callback(ijkff_inject_callback);
+        self = [super init];
+        if (self) {
+            ijkmp_global_init();
+            ijkmp_global_set_inject_callback(ijkff_inject_callback);
 
-        [IJKFFMoviePlayerController checkIfFFmpegVersionMatch:NO];
+            [IJKFFMoviePlayerController checkIfFFmpegVersionMatch:NO];
 
-        if (options == nil)
-            options = [IJKFFOptions optionsByDefault];
+            if (options == nil)
+                options = [IJKFFOptions optionsByDefault];
 
-        // IJKFFIOStatRegister(IJKFFIOStatDebugCallback);
-        // IJKFFIOStatCompleteRegister(IJKFFIOStatCompleteDebugCallback);
+            // IJKFFIOStatRegister(IJKFFIOStatDebugCallback);
+            // IJKFFIOStatCompleteRegister(IJKFFIOStatCompleteDebugCallback);
 
-        // init fields
-        _scalingMode = IJKMPMovieScalingModeAspectFit;
-        _shouldAutoplay = YES;
-        memset(&_asyncStat, 0, sizeof(_asyncStat));
-        memset(&_cacheStat, 0, sizeof(_cacheStat));
-        _monitor = [[IJKFFMonitor alloc] init];
+            // init fields
+            _scalingMode = IJKMPMovieScalingModeAspectFit;
+            _shouldAutoplay = YES;
+            memset(&_asyncStat, 0, sizeof(_asyncStat));
+            memset(&_cacheStat, 0, sizeof(_cacheStat));
+            _monitor = [[IJKFFMonitor alloc] init];
 
-        // init media resource
-        _urlString = aUrlString;
+            // init media resource
+            _urlString = aUrlString;
 
-        // init player
-        _mediaPlayer = ijkmp_ios_create(media_player_msg_loop);
-        _msgPool = [[IJKFFMoviePlayerMessagePool alloc] init];
-        IJKWeakHolder *weakHolder = [IJKWeakHolder new];
-        weakHolder.object = self;
+            // init player
+            _mediaPlayer = ijkmp_ios_create(media_player_msg_loop);
+            _msgPool = [[IJKFFMoviePlayerMessagePool alloc] init];
+            IJKWeakHolder *weakHolder = [IJKWeakHolder new];
+            weakHolder.object = self;
 
-        ijkmp_set_weak_thiz(_mediaPlayer, (__bridge_retained void *) self);
-        ijkmp_set_inject_opaque(_mediaPlayer, (__bridge_retained void *) weakHolder);
-        ijkmp_set_ijkio_inject_opaque(_mediaPlayer, (__bridge_retained void *)weakHolder);
-        ijkmp_set_option_int(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "start-on-prepared", _shouldAutoplay ? 1 : 0);
+            ijkmp_set_weak_thiz(_mediaPlayer, (__bridge_retained void *) self);
+            ijkmp_set_inject_opaque(_mediaPlayer, (__bridge_retained void *) weakHolder);
+            ijkmp_set_ijkio_inject_opaque(_mediaPlayer, (__bridge_retained void *)weakHolder);
+            ijkmp_set_option_int(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "start-on-prepared", _shouldAutoplay ? 1 : 0);
 
-        // init video sink
-        _glView = [[IJKSDLGLView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        _glView.isThirdGLView = NO;
-        _view = _glView;
-        _hudViewController = [[IJKSDLHudViewController alloc] init];
-        [_hudViewController setRect:_glView.frame];
-        _shouldShowHudView = NO;
-        _hudViewController.tableView.hidden = YES;
-        [_view addSubview:_hudViewController.tableView];
+            // init video sink
+            _glView = [[IJKSDLGLView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+            _glView.isThirdGLView = NO;
+            _view = _glView;
+            _hudViewController = [[IJKSDLHudViewController alloc] init];
+            [_hudViewController setRect:_glView.frame];
+            _shouldShowHudView = NO;
+            _hudViewController.tableView.hidden = YES;
+            [_view addSubview:_hudViewController.tableView];
 
-        [self setHudValue:nil forKey:@"scheme"];
-        [self setHudValue:nil forKey:@"host"];
-        [self setHudValue:nil forKey:@"path"];
-        [self setHudValue:nil forKey:@"ip"];
-        [self setHudValue:nil forKey:@"tcp-info"];
-        [self setHudValue:nil forKey:@"http"];
-        [self setHudValue:nil forKey:@"tcp-spd"];
-        [self setHudValue:nil forKey:@"t-prepared"];
-        [self setHudValue:nil forKey:@"t-render"];
-        [self setHudValue:nil forKey:@"t-preroll"];
-        [self setHudValue:nil forKey:@"t-http-open"];
-        [self setHudValue:nil forKey:@"t-http-seek"];
-        
-        self.shouldShowHudView = options.showHudView;
+            [self setHudValue:nil forKey:@"scheme"];
+            [self setHudValue:nil forKey:@"host"];
+            [self setHudValue:nil forKey:@"path"];
+            [self setHudValue:nil forKey:@"ip"];
+            [self setHudValue:nil forKey:@"tcp-info"];
+            [self setHudValue:nil forKey:@"http"];
+            [self setHudValue:nil forKey:@"tcp-spd"];
+            [self setHudValue:nil forKey:@"t-prepared"];
+            [self setHudValue:nil forKey:@"t-render"];
+            [self setHudValue:nil forKey:@"t-preroll"];
+            [self setHudValue:nil forKey:@"t-http-open"];
+            [self setHudValue:nil forKey:@"t-http-seek"];
+            
+            self.shouldShowHudView = options.showHudView;
 
-        ijkmp_ios_set_glview(_mediaPlayer, _glView);
-        ijkmp_set_option(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "overlay-format", "fcc-_es2");
-#ifdef DEBUG
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
-#else
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
-#endif
-        // init audio sink
-        [[IJKAudioKit sharedInstance] setupAudioSession];
+            ijkmp_ios_set_glview(_mediaPlayer, _glView);
+            ijkmp_set_option(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "overlay-format", "fcc-_es2");
+    #ifdef DEBUG
+            [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
+    #else
+            [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
+    #endif
+            // init audio sink
+            [IJKAudioKit sharedInstance].audioSessionCategory = audioSessionCategory;
+            [[IJKAudioKit sharedInstance] setupAudioSession];
 
-        [options applyTo:_mediaPlayer];
-        _pauseInBackground = NO;
+            [options applyTo:_mediaPlayer];
+            _pauseInBackground = NO;
 
-        // init extra
-        _keepScreenOnWhilePlaying = YES;
-        [self setScreenOn:YES];
+            // init extra
+            _keepScreenOnWhilePlaying = YES;
+            [self setScreenOn:YES];
 
-        _notificationManager = [[IJKNotificationManager alloc] init];
-        [self registerApplicationObservers];
-    }
-    return self;
+            _notificationManager = [[IJKNotificationManager alloc] init];
+            [self registerApplicationObservers];
+        }
+        return self;
 }
 
 - (id)initWithMoreContent:(NSURL *)aUrl
@@ -1224,6 +1242,10 @@ inline static void fillMetaInternal(NSMutableDictionary *meta, IjkMediaMeta *raw
                 _sampleAspectRatioDenominator = avmsg->arg2;
             [self changeNaturalSize];
             break;
+        case FFP_MSG_DAR_CHANGED:
+            NSLog(@"FFP_MSG_DAR_CHANGED: %d, %d\n", avmsg->arg1, avmsg->arg2);
+            _dar = (float)avmsg->arg1 / avmsg->arg2;
+            break;
         case FFP_MSG_VIDEO_ROTATION_CHANGED:
             _degrees = avmsg->arg1;
             if (_degrees != 0) {
@@ -1858,6 +1880,41 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
             [self setHudValue:value forKey:key];
         });
     }
+}
+
+- (CVPixelBufferRef)framePixelBuffer
+{
+    if (_mediaPlayer)
+    {
+        return ijkmp_get_pixelbuffer(_mediaPlayer);
+    }
+    
+    return NULL;
+}
+
+- (void)lockFramePixelBuffer
+{
+    if (_mediaPlayer)
+    {
+        ijkmp_pixelbuffer_mutex_lock(_mediaPlayer);
+    }
+}
+
+- (void)unlockFramePixelBuffer
+{
+    if (_mediaPlayer)
+    {
+        ijkmp_pixelbuffer_mutex_unlock(_mediaPlayer);
+    }
+}
+
+- (CGFloat)displayAspectRatio
+{
+    if (_mediaPlayer)
+    {
+        return _dar;
+    }
+    return 0.0;
 }
 
 @end

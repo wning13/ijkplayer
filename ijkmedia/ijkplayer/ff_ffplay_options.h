@@ -170,6 +170,8 @@ static const AVOption ffp_context_options[] = {
         OPTION_OFFSET(videotoolbox),        OPTION_INT(0, 0, 1) },
     { "videotoolbox-max-frame-width",       "VideoToolbox: max width of output frame",
         OPTION_OFFSET(vtb_max_frame_width), OPTION_INT(0, 0, INT_MAX) },
+    { "video-max-frame-width-default",      "max width of output frame default",
+        OPTION_OFFSET(vtb_frame_width_default), OPTION_INT(0, 0, INT_MAX) },
     { "videotoolbox-async",                 "VideoToolbox: use kVTDecodeFrame_EnableAsynchronousDecompression()",
         OPTION_OFFSET(vtb_async),           OPTION_INT(0, 0, 1) },
     { "videotoolbox-wait-async",            "VideoToolbox: call VTDecompressionSessionWaitForAsynchronousFrames()",

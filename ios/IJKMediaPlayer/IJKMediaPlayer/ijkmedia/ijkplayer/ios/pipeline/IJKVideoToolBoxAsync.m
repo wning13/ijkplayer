@@ -541,7 +541,7 @@ static VTDecompressionSessionRef vtbsession_create(Ijk_VideoToolBox_Opaque* cont
 
     ret = vtbformat_init(&context->fmt_desc, context->codecpar);
 
-    if (ffp->vtb_max_frame_width > 0 && width > ffp->vtb_max_frame_width) {
+    if (ffp->vtb_frame_width_default > 0 && ffp->vtb_max_frame_width > 0 && width > ffp->vtb_max_frame_width) {
         double w_scaler = (float)ffp->vtb_max_frame_width / width;
         width = ffp->vtb_max_frame_width;
         height = height * w_scaler;
@@ -562,6 +562,8 @@ static VTDecompressionSessionRef vtbsession_create(Ijk_VideoToolBox_Opaque* cont
                           kCVPixelBufferHeightKey, height);
     CFDictionarySetBoolean(destinationPixelBufferAttributes,
                           kCVPixelBufferOpenGLESCompatibilityKey, YES);
+    CFDictionarySetBoolean(destinationPixelBufferAttributes,
+                          kCVPixelBufferMetalCompatibilityKey, YES);
     outputCallback.decompressionOutputCallback = VTDecoderCallback;
     outputCallback.decompressionOutputRefCon = context  ;
     status = VTDecompressionSessionCreate(

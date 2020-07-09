@@ -65,6 +65,7 @@
 #include "ff_ffmsg_queue.h"
 #include "ff_ffpipenode.h"
 #include "ijkmeta.h"
+#include <CoreVideo/CoreVideo.h>
 
 #define DEFAULT_HIGH_WATER_MARK_IN_BYTES        (256 * 1024)
 
@@ -669,6 +670,7 @@ typedef struct FFPlayer {
     int vtb_async;
     int vtb_wait_async;
     int vtb_handle_resolution_change;
+    int vtb_frame_width_default;
 
     int mediacodec_all_videos;
     int mediacodec_avc;
@@ -720,6 +722,9 @@ typedef struct FFPlayer {
     char *mediacodec_default_name;
     int ijkmeta_delay_init;
     int render_wait_start;
+    
+    CVPixelBufferRef szt_pixelbuffer;
+    pthread_mutex_t szt_pixelbuffer_mutex;
 } FFPlayer;
 
 #define fftime_to_milliseconds(ts) (av_rescale(ts, 1000, AV_TIME_BASE))
@@ -808,6 +813,7 @@ inline static void ffp_reset_internal(FFPlayer *ffp)
 
     ffp->videotoolbox                   = 0; // option
     ffp->vtb_max_frame_width            = 0; // option
+    ffp->vtb_frame_width_default        = 0; // option
     ffp->vtb_async                      = 0; // option
     ffp->vtb_handle_resolution_change   = 0; // option
     ffp->vtb_wait_async                 = 0; // option
