@@ -240,3 +240,8 @@ typedef NS_ENUM(NSInteger, IJKMediaEvent) {
 - (int)invoke:(IJKMediaEvent)event attributes:(NSDictionary *)attributes;
 
 @end
+
+@protocol IJKAudioBufferOutDataDelegate <NSObject>
+
+- (void)outputPCMData:(NSData *)data channelsPerFrame:(NSInteger)channelsPerFrame bitsPerChannel:(NSInteger)bitsPerChannel sampleRate:(float)sampleRate isEnd:(BOOL)isEnd;
+@end

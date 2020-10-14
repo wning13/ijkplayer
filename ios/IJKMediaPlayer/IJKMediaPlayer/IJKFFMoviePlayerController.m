@@ -615,6 +615,7 @@ inline static int getPlayerOption(IJKFFOptionCategory category)
     _httpOpenDelegate       = nil;
     _liveOpenDelegate       = nil;
     _nativeInvokeDelegate   = nil;
+    _audioBufferOutDataDelegate = nil;
 
     __unused id weakPlayer = (__bridge_transfer IJKFFMoviePlayerController*)ijkmp_set_weak_thiz(_mediaPlayer, NULL);
     __unused id weakHolder = (__bridge_transfer IJKWeakHolder*)ijkmp_set_inject_opaque(_mediaPlayer, NULL);
@@ -1793,6 +1794,10 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
                              selector:@selector(applicationWillTerminate)
                                  name:UIApplicationWillTerminateNotification
                                object:nil];
+    [_notificationManager addObserver:self
+                             selector:@selector(audioBufferDataDidChanged:)
+        name:@"AudioBufferDataNotification"
+      object:nil];    
 }
 
 - (void)unregisterApplicationObservers
@@ -1868,6 +1873,18 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
             [self pause];
         }
     });
+}
+
+- (void)audioBufferDataDidChanged:(NSNotification *)notification {
+    NSData *data = [notification.userInfo valueForKey:@"pcmData"];
+    BOOL isEnd = [[notification.userInfo valueForKey:@"isEnd"] boolValue];
+    NSInteger mChannelsPerFrame = [[notification.userInfo valueForKey:@"mChannelsPerFrame"] integerValue];
+    NSInteger mBitsPerChannel = [[notification.userInfo valueForKey:@"mBitsPerChannel"] integerValue];
+    NSInteger mSampleRate =  [[notification.userInfo valueForKey:@"mSampleRate"] floatValue];
+
+    if(self.audioBufferOutDataDelegate) {
+        [self.audioBufferOutDataDelegate outputPCMData:data channelsPerFrame:mChannelsPerFrame bitsPerChannel:mBitsPerChannel sampleRate:mSampleRate isEnd:isEnd];
+    }
 }
 
 #pragma mark IJKFFHudController
