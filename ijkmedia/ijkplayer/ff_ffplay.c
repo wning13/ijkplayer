@@ -1788,9 +1788,13 @@ static int queue_picture(FFPlayer *ffp, AVFrame *src_frame, double pts, double d
         
         if (ffp -> videotoolbox) {
             ffp_pixelbuffer_lock(ffp);
-            ffp->szt_pixelbuffer = SDL_VoutOverlayVideoToolBox_GetCVPixelBufferRef(vp->bmp);  // picture->opaque;
+            if(SDL_VoutOverlayVideoToolBox_GetCVPixelBufferRef(vp->bmp)){
+                ffp->szt_pixelbuffer = SDL_VoutOverlayVideoToolBox_GetCVPixelBufferRef(vp->bmp);
+            } else {
+                ffp->szt_pixelbuffer = ffp->szt_pixelbuffer;
+            }
             ffp_pixelbuffer_unlock(ffp);
-            
+
             if (!ffp->szt_pixelbuffer) {
                 ALOGE("nil pixelBuffer in overlay\n");
             }

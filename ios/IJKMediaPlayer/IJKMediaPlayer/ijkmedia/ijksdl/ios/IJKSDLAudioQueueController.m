@@ -39,6 +39,7 @@
 
     volatile BOOL _isAborted;
     NSLock *_lock;
+    
 }
 
 - (id)initWithAudioSpec:(const SDL_AudioSpec *)aSpec
@@ -66,7 +67,7 @@
         IJKSDLGetAudioStreamBasicDescriptionFromSpec(&_spec, &streamDescription);
 
         SDL_CalculateAudioSpec(&_spec);
-
+        
         if (_spec.size == 0) {
             NSLog(@"aout_open_audio: unexcepted audio spec size %u", _spec.size);
             return nil;
@@ -155,16 +156,18 @@
 {
     if (!_audioQueueRef)
         return;
-
+    
     @synchronized(_lock) {
         if (_isStopped)
             return;
-
+        
         _isPaused = YES;
         OSStatus status = AudioQueuePause(_audioQueueRef);
         if (status != noErr)
             NSLog(@"AudioQueue: AudioQueuePause failed (%d)\n", (int)status);
     }
+    [self postAudioBufferDataEndNotification];
+    
 }
 
 - (void)flush
@@ -205,6 +208,22 @@
     // do not lock AudioQueueStop, or may be run into deadlock
     AudioQueueStop(_audioQueueRef, true);
     AudioQueueDispose(_audioQueueRef, true);
+    [self postAudioBufferDataEndNotification];
+
+   
+}
+
+- (void)postAudioBufferDataEndNotification {
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+           NSNotification *notification = [NSNotification notificationWithName:@"AudioBufferDataNotification" object:nil userInfo:@{
+               @"pcmData": [[NSData alloc]init],
+               @"isEnd":@(YES),
+               @"mChannelsPerFrame":@(0),
+               @"mBitsPerChannel":@(0),
+               @"mSampleRate":@(0)
+           }];
+           [[NSNotificationCenter defaultCenter] postNotification:notification];
+       });
 }
 
 - (void)close
@@ -244,7 +263,7 @@
 static void IJKSDLAudioQueueOuptutCallback(void * inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inBuffer) {
     @autoreleasepool {
         IJKSDLAudioQueueController* aqController = (__bridge IJKSDLAudioQueueController *) inUserData;
-
+        
         if (!aqController) {
             // do nothing;
         } else if (aqController->_isPaused || aqController->_isStopped) {
@@ -252,7 +271,23 @@ static void IJKSDLAudioQueueOuptutCallback(void * inUserData, AudioQueueRef inAQ
         } else {
             (*aqController.spec.callback)(aqController.spec.userdata, inBuffer->mAudioData, inBuffer->mAudioDataByteSize);
         }
-
+        NSInteger mChannelsPerFrame = 0;
+        NSInteger mBitsPerChannel = 0;
+        CGFloat mSampleRate = 0;
+        if(aqController) {
+            mChannelsPerFrame = aqController->_spec.channels;
+            mBitsPerChannel = SDL_AUDIO_BITSIZE(aqController->_spec.format);
+            mSampleRate = aqController->_spec.freq;
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"AudioBufferDataNotification" object:nil userInfo:@{
+            @"pcmData": [[NSData alloc] initWithBytes:inBuffer->mAudioData length:inBuffer->mAudioDataByteSize],
+            @"isEnd":@(!aqController || aqController->_isPaused || aqController->_isStopped),
+            @"mChannelsPerFrame":@(mChannelsPerFrame),
+            @"mBitsPerChannel":@(mBitsPerChannel),
+            @"mSampleRate":@(mSampleRate)
+        }]];
+        
         AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
     }
 }

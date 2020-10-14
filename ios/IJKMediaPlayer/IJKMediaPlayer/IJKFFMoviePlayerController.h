@@ -145,6 +145,8 @@ typedef enum IJKLogLevel {
 
 @property (nonatomic, retain) id<IJKMediaNativeInvokeDelegate> nativeInvokeDelegate;
 
+@property (nonatomic, retain) id<IJKAudioBufferOutDataDelegate> audioBufferOutDataDelegate;
+
 - (void)didShutdown;
 
 #pragma mark KVO properties
